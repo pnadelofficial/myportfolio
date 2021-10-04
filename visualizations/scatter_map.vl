@@ -1,0 +1,52 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1000,
+  "height": 600,
+  "projection": {
+    "type": "equalEarth",
+    "scale": 1000,
+    "center": [20, 37.5]
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/topojson/Romanum_Admin.json",
+        "format": {
+          "type": "topojson",
+          "feature": "Romanum_Admin"
+        }
+      },
+      "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "gray"}
+    },
+    {
+      "data": {
+        "url": "data/output/phi0474.phi056.perseus-lat1/dataframe.csv"
+      },
+      "mark": "circle",
+      "encoding": {
+        "latitude": {
+          "field": "location_lat",
+          "type": "quantitative"
+        },
+        "longitude": {
+          "field": "location_long",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {"title": "Name", "field": "location"},
+          {"title": "Count", "aggregate": "count", "field": "topo_count", "type": "quantitative"}
+        ],
+        "size": {
+          "aggregate": "count",
+          "field": "location",
+          "type": "quantitative",
+          "title": "Letter Count for Location",
+          "scale": {
+            "range": [100, 500]
+          }
+        },
+        "color": {"value": "#0000ff88"}
+      }
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 1000,
+    "height": 600,
+    "projection": {
+      "type": "equalEarth",
+      "scale": 1000,
+      "center": [20, 37.5]
+    },
+    "data": {
+      "url": "data/topojson/Romanum_Admin.json",
+      "format": {
+        "type": "topojson",
+        "feature": "Romanum_Admin"
+      }
+    },
+    "transform": [{
+      "lookup": "id",
+      "from": {
+        "data": {
+          "url": "data/output/phi0474.phi056.perseus-lat1/dataframe.csv"
+        },
+        "key": "topo_id",
+        "fields": ["topo_count"]
+      },
+      "default": "0"
+    }],
+    "mark": {"type": "geoshape", "stroke": "gray"},
+    "encoding": {
+      "color": {
+        "field": "topo_count",
+        "type": "quantitative",
+        "scale": {"scheme": "blues"},
+        "title": "Letter Count for Area"
+      },
+      "tooltip": [
+        {"title": "Name", "field": "properties.Name"},
+        {"title": "Count", "field": "topo_count", "type": "quantitative"}
+      ]
+    }
+  }
+  
